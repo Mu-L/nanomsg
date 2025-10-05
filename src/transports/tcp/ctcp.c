@@ -607,6 +607,7 @@ static void nn_ctcp_start_connecting (struct nn_ctcp *self,
     /*  Bind the socket to the local network interface. */
     rc = nn_usock_bind (&self->usock, (struct sockaddr*) &local, locallen);
     if (nn_slow (rc != 0)) {
+	nn_usock_stop (&self->usock);
         nn_backoff_start (&self->retry);
         self->state = NN_CTCP_STATE_WAITING;
         return;
